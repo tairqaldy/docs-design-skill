@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+examples/out/_preview/
+examples/out/*.png
+examples/out/*.docx
+_preview/
