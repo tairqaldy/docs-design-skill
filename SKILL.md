@@ -93,9 +93,12 @@ Every figure must look like it belongs to the page: monochrome, the document's s
   g.node("w", 2, 1.5, "Weather", "Dry / Rainy"); g.node("p", 7.5, 1.5, "Path", "Obstacle / Clear")
   g.node("x", 12, 1.5, "$X_1$", shape="circle", w=1.2, h=1.2)
   g.edge("w", "p", "influences")              # rad= for curves, dashed=True, side=-1 flips label
+  g.loop("w", "0.70", side="top")            # self-transition; side= top/bottom/left/right
   g.save("bn.png")
   ```
-  Leave at least ~2 cm between boxes when an edge has a label.
+  Leave at least ~2 cm between boxes when an edge has a label. For state diagrams, draw the two
+  directions between a pair of states as opposite curves (`rad=0.3` on both edges) and put each
+  self-loop on the side facing away from the other edges.
 - **Program output / "screenshot" requirements:** use `render_terminal(output_text, "out.png",
   command="python solution.py")`. Run the real program to get that text; never type output by hand.
 - **Real screenshots** go in as ordinary figures with a caption.

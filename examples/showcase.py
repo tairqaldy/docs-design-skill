@@ -39,6 +39,18 @@ def pipeline(path, theme):
     g.save(path)
 
 
+def reader_states(path, theme):
+    """Two-state chain with self-loops: covers Diagram.loop() and curved edges both ways."""
+    g = Diagram(10.5, 2.8, theme=theme)
+    g.node("on", 2.6, 1.05, "On the line", shape="circle", w=2.6, h=1.0)
+    g.node("lost", 7.9, 1.05, "Lost", shape="circle", w=2.0, h=1.0)
+    g.edge("on", "lost", "0.10", rad=-0.3)
+    g.edge("lost", "on", "0.60", rad=-0.3)
+    g.loop("on", "0.90", side="top")
+    g.loop("lost", "0.40", side="top")
+    g.save(path)
+
+
 def body(d, theme):
     d.section("Why the line length matters")
     d.para("Most of what makes a page tiring has nothing to do with the font. It is the length of the "
@@ -74,6 +86,9 @@ def body(d, theme):
     d.section("The pipeline")
     pipeline(OUT / f"pipe_{theme}.png", theme)
     d.figure(OUT / f"pipe_{theme}.png", "From draft to PDF.")
+    d.para("At each line break the eye either finds the next line or loses its place (Figure 4).")
+    reader_states(OUT / f"states_{theme}.png", theme)
+    d.figure(OUT / f"states_{theme}.png", "The eye at a line break, as a two-state chain (illustrative).")
     d.bullets(["Write the text first, in plain sentences.",
                "Build it with one call per element; the preset handles spacing.",
                "Open the rendered pages and fix what looks wrong before sending anything."], numbered=True)

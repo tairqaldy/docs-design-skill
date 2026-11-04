@@ -343,6 +343,27 @@ class Diagram:
                          fontsize=8.5, style="italic")
         return arr
 
+    def loop(self, key, label=None, side="top", size=0.55):
+        """Self-transition arrow drawn as a small arc on one side of a node (state machines, HMMs)."""
+        from matplotlib.patches import FancyArrowPatch
+        _, x, y, w, h = self.nodes[key]
+        d = size / 2
+        if side == "top":
+            a, b, lx, ly = (x - d, y + h / 2), (x + d, y + h / 2), x, y + h / 2 + size * 1.05 + 0.18
+        elif side == "bottom":
+            a, b, lx, ly = (x + d, y - h / 2), (x - d, y - h / 2), x, y - h / 2 - size * 1.05 - 0.18
+        elif side == "left":
+            a, b, lx, ly = (x - w / 2, y - d), (x - w / 2, y + d), x - w / 2 - size * 1.05 - 0.3, y
+        else:
+            a, b, lx, ly = (x + w / 2, y + d), (x + w / 2, y - d), x + w / 2 + size * 1.05 + 0.3, y
+        arr = FancyArrowPatch(a, b, connectionstyle="arc3,rad=-1.9", lw=0.8, color="#111111",
+                              arrowstyle="-|>,head_length=0.38,head_width=0.16", mutation_scale=10,
+                              shrinkA=0, shrinkB=0)
+        self.ax.add_patch(arr)
+        if label:
+            self.ax.text(lx, ly, label, ha="center", va="center", fontsize=8.5, style="italic")
+        return arr
+
     def text(self, x, y, s, **kw):
         kw.setdefault("fontsize", 8.5)
         kw.setdefault("style", "italic")
